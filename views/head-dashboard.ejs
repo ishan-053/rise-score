@@ -178,261 +178,137 @@
                     Add a new Rise & Recruit member.
                 </p>
 
-                <!-- KEEP YOUR EXISTING ADD MEMBER FORM HERE -->
+                <form id="memberForm">
+
+                    <!-- Name -->
+
+                    <div class="mb-5">
+
+                        <label for="memberName" class="mb-2 block text-sm font-semibold">
+                            Name
+                        </label>
+
+                        <input id="memberName" type="text" maxlength="100" required placeholder="Enter member name"
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                    </div>
+
+                    <!-- Department -->
+
+                    <div class="mb-5">
+
+                        <label for="memberDepartment" class="mb-2 block text-sm font-semibold">
+                            Department
+                        </label>
+
+                        <select id="memberDepartment" required
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="CSE">
+                                CSE
+                            </option>
+
+                            <option value="E&TC">
+                                E&TC
+                            </option>
+
+                            <option value="MECH">
+                                MECH
+                            </option>
+
+                            <option value="CIVIL">
+                                CIVIL
+                            </option>
+
+                            <option value="EE">
+                                EE
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Email -->
+
+                    <div class="mb-6">
+
+                        <label for="memberEmail" class="mb-2 block text-sm font-semibold">
+                            Email
+                        </label>
+
+                        <input id="memberEmail" type="email" maxlength="150" required placeholder="member@example.com"
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                    </div>
+
+                    <!-- Message -->
+
+                    <div id="memberMessage" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
+                    </div>
+
+                    <!-- Button -->
+
+                    <button type="submit" id="addMemberButton"
+                        class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+                        + Add Member
+                    </button>
+
+                </form>
 
             </div>
             <!-- END OF ADD MEMBER CARD -->
 
-
         </div>
         <!-- END OF TWO-COLUMN GRID -->
 
-        <!-- Add Member -->
 
-        <div class="mt-10 max-w-2xl rounded-2xl border border-white/10 bg-[#102D50] p-8">
+        <!-- Dashboard -->
 
-            <h3 class="text-2xl font-bold">
-                Add Member
-            </h3>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
 
-            <p class="mt-2 mb-8 text-sm text-white/50">
-                Add a new Rise & Recruit member.
-            </p>
+            <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
 
-            <form id="memberForm">
+                <p class="text-sm text-white/50">
+                    Manage Scores
+                </p>
 
+                <p class="mt-3 text-xl font-bold">
+                    Add points to members
+                </p>
 
-                <!-- Name -->
-
-                <div class="mb-5">
-
-                    <label for="memberName" class="mb-2 block text-sm font-semibold">
-
-                        Name
-
-                    </label>
-
-                    <input id="memberName" type="text" maxlength="100" required placeholder="Enter member name"
-                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-                </div>
+            </div>
 
 
-                <!-- Department -->
+            <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
 
-                <div class="mb-5">
+                <p class="text-sm text-white/50">
+                    Members
+                </p>
 
-                    <label for="memberDepartment" class="mb-2 block text-sm font-semibold">
+                <p class="mt-3 text-xl font-bold">
+                    View club members
+                </p>
 
-                        Department
-
-                    </label>
-
-                    <select id="memberDepartment" required
-                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-                        <option value="">
-                            Select Department
-                        </option>
-
-                        <option value="CSE">
-                            CSE
-                        </option>
-
-                        <option value="E&TC">
-                            E&TC
-                        </option>
-
-                        <option value="MECH">
-                            MECH
-                        </option>
-
-                        <option value="CIVIL">
-                            CIVIL
-                        </option>
-
-                        <option value="EE">
-                            EE
-                        </option>
-
-                    </select>
-
-                </div>
+            </div>
 
 
-                <!-- Email -->
+            <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
 
-                <div class="mb-6">
+                <p class="text-sm text-white/50">
+                    Leaderboard
+                </p>
 
-                    <label for="memberEmail" class="mb-2 block text-sm font-semibold">
+                <a href="/score" class="mt-3 inline-block font-bold text-riseOrange hover:text-orange-400">
+                    View Leaderboard →
+                </a>
 
-                        Email
-
-                    </label>
-
-                    <input id="memberEmail" type="email" maxlength="150" required placeholder="member@example.com"
-                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-                </div>
-
-
-                <!-- Message -->
-
-                <div id="memberMessage" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
-                </div>
-
-
-                <!-- Button -->
-
-                <button type="submit" id="addMemberButton"
-                    class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
-
-                    + Add Member
-
-                </button>
-
-            </form>
+            </div>
 
         </div>
-
-
-        <!-- Members -->
-
-        <div class="mb-5">
-
-            <label for="member" class="mb-2 block text-sm font-semibold">
-
-                Members
-
-            </label>
-
-            <select id="member" name="member_id" required
-                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-                <option value="">Select a Member</option>
-
-                <% if (members && members.length> 0) { %>
-
-                    <% members.forEach(member=> { %>
-
-                        <option value="<%= member.id %>">
-                            <%= member.name %> (<%= member.department || "N/A" %>)
-                        </option>
-
-                        <% }) %>
-
-                            <% } else { %>
-
-                                <option value="" disabled>
-                                    No members found
-                                </option>
-
-                                <% } %>
-
-            </select>
-
-        </div>
-
-
-        <!-- Points -->
-
-        <div class="mb-5">
-
-            <label for="points" class="mb-2 block text-sm font-semibold">
-
-                Points
-
-            </label>
-
-            <input id="points" type="number" min="1" step="1" required placeholder="e.g. 20"
-                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-        </div>
-
-
-        <!-- Reason -->
-
-        <div class="mb-6">
-
-            <label for="reason" class="mb-2 block text-sm font-semibold">
-
-                Reason
-
-            </label>
-
-            <input id="reason" type="text" maxlength="150" required placeholder="e.g. Event Management"
-                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
-
-        </div>
-
-
-        <!-- Message -->
-
-        <div id="message" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
-        </div>
-
-
-        <!-- Button -->
-
-        <button type="submit" id="addPointsButton"
-            class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
-
-            Add Points
-
-        </button>
-
-        </form>
-
-        </div>
-
-    </main>
-
-
-    <!--Dashboard-->
-
-    <div class="grid gap-6 md:grid-cols-3">
-
-        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
-
-            <p class="text-sm text-white/50">
-                Manage Scores
-            </p>
-
-            <p class="mt-3 text-xl font-bold">
-                Add points to members
-            </p>
-
-        </div>
-
-
-        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
-
-            <p class="text-sm text-white/50">
-                Members
-            </p>
-
-            <p class="mt-3 text-xl font-bold">
-                View club members
-            </p>
-
-        </div>
-
-
-        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
-
-            <p class="text-sm text-white/50">
-                Leaderboard
-            </p>
-
-            <a href="/score" class="mt-3 inline-block font-bold text-riseOrange hover:text-orange-400">
-
-                View Leaderboard →
-
-            </a>
-
-        </div>
-
-    </div>
 
     </main>
 
@@ -707,7 +583,7 @@
 
                 const members = await response.json();
 
-                console.log("Members received:", member);
+                console.log("Members received:", members);
 
                 memberSelect.innerHTML =
                     '<option value="">Select a member</option>';

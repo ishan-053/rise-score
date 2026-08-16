@@ -186,10 +186,10 @@ app.post("/api/points", verifyToken, async (req, res) => {
                 // Insert member
                 const result = await pool.query(
                     `INSERT INTO members
-                (name, department, email)
-             VALUES
-                ($1, $2, $3)
-             RETURNING id, name, department, email`,
+        (name, department, email)
+     VALUES
+        ($1, $2, $3)
+     RETURNING id, name, department, email`,
                     [
                         name.trim(),
                         department.trim(),
