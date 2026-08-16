@@ -149,70 +149,6 @@ app.post("/api/points", verifyToken, async (req, res) => {
                 error: "Points must be a positive integer"
             });
         }
-        app.post("/api/members", verifyToken, async (req, res) => {
-
-            try {
-
-                const { name, department, email } = req.body;
-
-                // Validate
-                if (!name || !department || !email) {
-                    return res.status(400).json({
-                        error: "Name, department and email are required"
-                    });
-                }
-
-                // Basic email validation
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (!emailRegex.test(email)) {
-                    return res.status(400).json({
-                        error: "Invalid email address"
-                    });
-                }
-
-                // Check duplicate email
-                const existingMember = await pool.query(
-                    `SELECT id FROM members WHERE LOWER(email) = LOWER($1)`,
-                    [email.trim()]
-                );
-
-                if (existingMember.rows.length > 0) {
-                    return res.status(409).json({
-                        error: "A member with this email already exists"
-                    });
-                }
-
-                // Insert member
-                const result = await pool.query(
-                    `INSERT INTO members
-        (name, department, email)
-     VALUES
-        ($1, $2, $3)
-     RETURNING id, name, department, email`,
-                    [
-                        name.trim(),
-                        department.trim(),
-                        email.trim().toLowerCase()
-                    ]
-                );
-
-                res.status(201).json({
-                    message: "Member added successfully",
-                    member: result.rows[0]
-                });
-
-            } catch (error) {
-
-                console.error("Add member error:", error);
-
-                res.status(500).json({
-                    error: "Failed to add member"
-                });
-
-            }
-
-        });
 
         // Check member exists
         const memberResult = await pool.query(
@@ -252,6 +188,71 @@ app.post("/api/points", verifyToken, async (req, res) => {
 
         res.status(500).json({
             error: "Failed to award points"
+        });
+
+    }
+
+});
+
+app.post("/api/members", verifyToken, async (req, res) => {
+
+    try {
+
+        const { name, department, email } = req.body;
+
+        // Validate
+        if (!name || !department || !email) {
+            return res.status(400).json({
+                error: "Name, department and email are required"
+            });
+        }
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                error: "Invalid email address"
+            });
+        }
+
+        // Check duplicate email
+        const existingMember = await pool.query(
+            `SELECT id FROM members WHERE LOWER(email) = LOWER($1)`,
+            [email.trim()]
+        );
+
+        if (existingMember.rows.length > 0) {
+            return res.status(409).json({
+                error: "A member with this email already exists"
+            });
+        }
+
+        // Insert member
+        const result = await pool.query(
+            `INSERT INTO members
+        (name, department, email)
+     VALUES
+        ($1, $2, $3)
+     RETURNING id, name, department, email`,
+            [
+                name.trim(),
+                department.trim(),
+                email.trim().toLowerCase()
+            ]
+        );
+
+        res.status(201).json({
+            message: "Member added successfully",
+            member: result.rows[0]
+        });
+
+    } catch (error) {
+
+        console.error("Add member error:", error);
+
+        res.status(500).json({
+            error: "Failed to add member"
         });
 
     }
