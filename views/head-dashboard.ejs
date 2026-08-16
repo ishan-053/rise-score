@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Head Dashboard | Rise-Score</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        riseOrange: "#F97316",
+                        riseBlue: "#0B2341",
+                        riseNavy: "#06172D",
+                        riseCard: "#102D50"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-riseNavy text-white">
+
+    <div class="h-1 bg-riseOrange"></div>
+
+    <!-- Header -->
+
+    <header class="border-b border-white/10 bg-riseBlue">
+
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+
+            <div>
+                <h1 class="text-2xl font-extrabold">
+                    Rise-Score
+                </h1>
+
+                <p class="text-sm text-white/50">
+                    Head Dashboard
+                </p>
+            </div>
+
+            <button id="logoutButton"
+                class="rounded-xl border border-riseOrange px-5 py-2 font-semibold text-riseOrange hover:bg-riseOrange hover:text-white">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <main class="mx-auto max-w-7xl px-6 py-12">
+
+        <div class="mb-10">
+            <h2 class="text-4xl font-bold">
+                Welcome, Head
+            </h2>
+
+            <p class="mt-3 text-white/50">
+                Manage member scores and club performance.
+            </p>
+        </div>
+
+
+        <!-- Add Points -->
+
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+
+            <div class="rounded-2xl border border-white/10 bg-[#102D50] p-8">
+
+                <h3 class="text-2xl font-bold">
+                    Add Points
+                </h3>
+
+                <p class="mt-2 mb-8 text-sm text-white/50">
+                    Award points to a Rise & Recruit member.
+                </p>
+
+
+                <form id="pointsForm">
+
+                    <!-- Member -->
+
+                    <div class="mb-5">
+
+                        <label for="member" class="mb-2 block text-sm font-semibold">
+                            Member
+                        </label>
+
+                        <select id="member" required
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                            <option value="">
+                                Select a Member
+                            </option>
+
+                            <% if (members && members.length> 0) { %>
+
+                                <% members.forEach(member=> { %>
+
+                                    <option value="<%= member.id %>">
+                                        <%= member.name %> (<%= member.department || "N/A" %>)
+                                    </option>
+
+                                    <% }) %>
+
+                                        <% } %>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Points -->
+
+                    <div class="mb-5">
+
+                        <label for="points" class="mb-2 block text-sm font-semibold">
+                            Points
+                        </label>
+
+                        <input id="points" type="number" min="1" step="1" required placeholder="e.g. 20"
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                    </div>
+
+
+                    <!-- Reason -->
+
+                    <div class="mb-6">
+
+                        <label for="reason" class="mb-2 block text-sm font-semibold">
+                            Reason
+                        </label>
+
+                        <input id="reason" type="text" maxlength="150" required placeholder="e.g. Event Management"
+                            class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                    </div>
+
+
+                    <div id="message" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
+                    </div>
+
+
+                    <button type="submit" id="addPointsButton"
+                        class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600">
+
+                        Add Points
+
+                    </button>
+
+                </form>
+
+            </div>
+            <!-- END OF ADD POINTS CARD -->
+
+
+            <!-- Add Member -->
+
+            <div class="rounded-2xl border border-white/10 bg-[#102D50] p-8">
+
+                <h3 class="text-2xl font-bold">
+                    Add Member
+                </h3>
+
+                <p class="mt-2 mb-8 text-sm text-white/50">
+                    Add a new Rise & Recruit member.
+                </p>
+
+                <!-- KEEP YOUR EXISTING ADD MEMBER FORM HERE -->
+
+            </div>
+            <!-- END OF ADD MEMBER CARD -->
+
+
+        </div>
+        <!-- END OF TWO-COLUMN GRID -->
+
+        <!-- Add Member -->
+
+        <div class="mt-10 max-w-2xl rounded-2xl border border-white/10 bg-[#102D50] p-8">
+
+            <h3 class="text-2xl font-bold">
+                Add Member
+            </h3>
+
+            <p class="mt-2 mb-8 text-sm text-white/50">
+                Add a new Rise & Recruit member.
+            </p>
+
+            <form id="memberForm">
+
+
+                <!-- Name -->
+
+                <div class="mb-5">
+
+                    <label for="memberName" class="mb-2 block text-sm font-semibold">
+
+                        Name
+
+                    </label>
+
+                    <input id="memberName" type="text" maxlength="100" required placeholder="Enter member name"
+                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                </div>
+
+
+                <!-- Department -->
+
+                <div class="mb-5">
+
+                    <label for="memberDepartment" class="mb-2 block text-sm font-semibold">
+
+                        Department
+
+                    </label>
+
+                    <select id="memberDepartment" required
+                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        <option value="CSE">
+                            CSE
+                        </option>
+
+                        <option value="E&TC">
+                            E&TC
+                        </option>
+
+                        <option value="MECH">
+                            MECH
+                        </option>
+
+                        <option value="CIVIL">
+                            CIVIL
+                        </option>
+
+                        <option value="EE">
+                            EE
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="mb-6">
+
+                    <label for="memberEmail" class="mb-2 block text-sm font-semibold">
+
+                        Email
+
+                    </label>
+
+                    <input id="memberEmail" type="email" maxlength="150" required placeholder="member@example.com"
+                        class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                </div>
+
+
+                <!-- Message -->
+
+                <div id="memberMessage" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
+                </div>
+
+
+                <!-- Button -->
+
+                <button type="submit" id="addMemberButton"
+                    class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+
+                    + Add Member
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Members -->
+
+        <div class="mb-5">
+
+            <label for="member" class="mb-2 block text-sm font-semibold">
+
+                Members
+
+            </label>
+
+            <select id="member" name="member_id" required
+                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+                <option value="">Select a Member</option>
+
+                <% if (members && members.length> 0) { %>
+
+                    <% members.forEach(member=> { %>
+
+                        <option value="<%= member.id %>">
+                            <%= member.name %> (<%= member.department || "N/A" %>)
+                        </option>
+
+                        <% }) %>
+
+                            <% } else { %>
+
+                                <option value="" disabled>
+                                    No members found
+                                </option>
+
+                                <% } %>
+
+            </select>
+
+        </div>
+
+
+        <!-- Points -->
+
+        <div class="mb-5">
+
+            <label for="points" class="mb-2 block text-sm font-semibold">
+
+                Points
+
+            </label>
+
+            <input id="points" type="number" min="1" step="1" required placeholder="e.g. 20"
+                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+        </div>
+
+
+        <!-- Reason -->
+
+        <div class="mb-6">
+
+            <label for="reason" class="mb-2 block text-sm font-semibold">
+
+                Reason
+
+            </label>
+
+            <input id="reason" type="text" maxlength="150" required placeholder="e.g. Event Management"
+                class="w-full rounded-xl border border-white/10 bg-[#06172D] px-4 py-3 text-white outline-none focus:border-orange-500">
+
+        </div>
+
+
+        <!-- Message -->
+
+        <div id="message" class="mb-5 hidden rounded-xl px-4 py-3 text-sm">
+        </div>
+
+
+        <!-- Button -->
+
+        <button type="submit" id="addPointsButton"
+            class="w-full rounded-xl bg-orange-500 px-5 py-3 font-bold transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+
+            Add Points
+
+        </button>
+
+        </form>
+
+        </div>
+
+    </main>
+
+
+    <!--Dashboard-->
+
+    <div class="grid gap-6 md:grid-cols-3">
+
+        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
+
+            <p class="text-sm text-white/50">
+                Manage Scores
+            </p>
+
+            <p class="mt-3 text-xl font-bold">
+                Add points to members
+            </p>
+
+        </div>
+
+
+        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
+
+            <p class="text-sm text-white/50">
+                Members
+            </p>
+
+            <p class="mt-3 text-xl font-bold">
+                View club members
+            </p>
+
+        </div>
+
+
+        <div class="rounded-2xl border border-white/10 bg-riseCard p-6">
+
+            <p class="text-sm text-white/50">
+                Leaderboard
+            </p>
+
+            <a href="/score" class="mt-3 inline-block font-bold text-riseOrange hover:text-orange-400">
+
+                View Leaderboard →
+
+            </a>
+
+        </div>
+
+    </div>
+
+    </main>
+
+
+    <script type="module">
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        // Add Member
+
+
+        const memberForm =
+            document.getElementById("memberForm");
+
+        const memberName =
+            document.getElementById("memberName");
+
+        const memberDepartment =
+            document.getElementById("memberDepartment");
+
+        const memberEmail =
+            document.getElementById("memberEmail");
+
+        const memberMessage =
+            document.getElementById("memberMessage");
+
+        const addMemberButton =
+            document.getElementById("addMemberButton");
+
+
+        memberForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            try {
+
+                const user = auth.currentUser;
+
+                if (!user) {
+                    throw new Error("You are not logged in");
+                }
+
+
+                const name =
+                    memberName.value.trim();
+
+                const department =
+                    memberDepartment.value;
+
+                const email =
+                    memberEmail.value.trim();
+
+
+                if (!name || !department || !email) {
+
+                    throw new Error(
+                        "Please fill all fields"
+                    );
+
+                }
+
+
+                addMemberButton.disabled = true;
+
+                addMemberButton.textContent =
+                    "Adding...";
+
+
+                // Get Firebase token
+
+                const idToken =
+                    await user.getIdToken(true);
+
+
+                // Send to Express
+
+                const response =
+                    await fetch("/api/members", {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + idToken
+
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+
+                            department: department,
+
+                            email: email
+
+                        })
+
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error ||
+                        "Failed to add member"
+                    );
+
+                }
+
+
+                // Success
+
+                memberMessage.textContent =
+                    "Member added successfully!";
+
+                memberMessage.className =
+                    "mb-5 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-400";
+
+
+                // Clear form
+
+                memberForm.reset();
+
+
+
+
+                if (typeof memberSelect !== "undefined") {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        data.member.id;
+
+                    option.textContent =
+                        `${data.member.name} (${data.member.department})`;
+
+                    memberSelect.appendChild(option);
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Add member error:",
+                    error
+                );
+
+
+                memberMessage.textContent =
+                    error.message;
+
+                memberMessage.className =
+                    "mb-5 rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-400";
+
+
+            } finally {
+
+                addMemberButton.disabled = false;
+
+                addMemberButton.textContent =
+                    "+ Add Member";
+
+            }
+
+        });
+
+        // Firebase
+
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyALOrfbjPUfNQQ-wgPRCChxBZGjrQilL64",
+
+            authDomain: "rise-score.firebaseapp.com",
+
+            projectId: "rise-score",
+
+            storageBucket: "rise-score.firebasestorage.app",
+
+            messagingSenderId: "245312879304",
+
+            appId: "1:245312879304:web:1e5bfef268a121405bc3fd"
+
+        };
+
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+        logoutButton.addEventListener("click", async () => {
+
+            try {
+
+                await signOut(auth);
+
+                console.log("Logout successful");
+
+                window.location.href = "/head/login";
+
+            } catch (error) {
+
+                console.error("Logout failed:", error);
+
+            }
+
+        });
+
+
+        // Elements
+
+
+        const memberSelect =
+            document.getElementById("member");
+
+        const pointsForm =
+            document.getElementById("pointsForm");
+
+        const pointsInput =
+            document.getElementById("points");
+
+        const reasonInput =
+            document.getElementById("reason");
+
+        const message =
+            document.getElementById("message");
+
+        const addPointsButton =
+            document.getElementById("addPointsButton");
+
+
+
+        // Load Members
+
+
+        async function loadMembers() {
+
+            try {
+
+                console.log("Loading members...");
+
+                const response = await fetch("/api/members");
+
+                console.log("Members API status:", response.status);
+
+                if (!response.ok) {
+                    throw new Error("Members API failed");
+                }
+
+                const members = await response.json();
+
+                console.log("Members received:", member);
+
+                memberSelect.innerHTML =
+                    '<option value="">Select a member</option>';
+
+                members.forEach(member => {
+
+                    const option = document.createElement("option");
+
+                    option.value = member.id;
+
+                    option.textContent =
+                        `${member.name} (${member.department || "N/A"})`;
+
+                    memberSelect.appendChild(option);
+
+                });
+
+                console.log(
+                    "Dropdown options:",
+                    memberSelect.options.length
+                );
+
+            } catch (error) {
+
+                console.error("Loading members failed:", error);
+
+            }
+        }
+
+
+        // Show message
+
+
+        function showMessage(text, success) {
+
+            message.textContent = text;
+
+            message.classList.remove(
+                "hidden",
+                "bg-green-500/10",
+                "text-green-400",
+                "bg-red-500/10",
+                "text-red-400"
+            );
+
+
+            if (success) {
+
+                message.classList.add(
+                    "bg-green-500/10",
+                    "text-green-400"
+                );
+
+            } else {
+
+                message.classList.add(
+                    "bg-red-500/10",
+                    "text-red-400"
+                );
+
+            }
+
+        }
+
+
+
+        // Submit points
+
+
+        pointsForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                const user = auth.currentUser;
+
+                if (!user) {
+
+                    showMessage(
+                        "You are not logged in.",
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                const member_id =
+                    memberSelect.value;
+
+                const points =
+                    Number(pointsInput.value);
+
+                const reason =
+                    reasonInput.value.trim();
+
+
+                if (!member_id) {
+
+                    showMessage(
+                        "Please select a member.",
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                if (!Number.isInteger(points) || points <= 0) {
+
+                    showMessage(
+                        "Points must be a positive whole number.",
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                if (!reason) {
+
+                    showMessage(
+                        "Please enter a reason.",
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                addPointsButton.disabled = true;
+
+                addPointsButton.textContent =
+                    "Adding...";
+
+
+                try {
+
+                    // Get fresh Firebase token
+
+                    const idToken =
+                        await user.getIdToken(true);
+
+
+                    // Send to Express
+
+                    const response =
+                        await fetch(
+                            "/api/points",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        "Bearer " + idToken
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    member_id:
+                                        Number(member_id),
+
+                                    points:
+                                        points,
+
+                                    reason:
+                                        reason
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.error ||
+                            "Failed to add points"
+                        );
+
+                    }
+
+
+                    showMessage(
+                        " Points awarded successfully!",
+                        true
+                    );
+
+
+                    // Reset form
+
+                    memberSelect.value = "";
+
+                    pointsInput.value = "";
+
+                    reasonInput.value = "";
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        error.message,
+                        false
+                    );
+
+                } finally {
+
+                    addPointsButton.disabled = false;
+
+                    addPointsButton.textContent =
+                        "Add Points";
+
+                }
+
+            }
+        );
+
+
+
+        // Wait for Firebase login
+        loadMembers();
+
+    </script>
+</body>
+
+</html>

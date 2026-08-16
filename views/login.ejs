@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Head Login | Rise-Score</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        riseOrange: "#F97316",
+                        riseBlue: "#0B2341",
+                        riseNavy: "#06172D",
+                        riseCard: "#102D50"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+
+<body class="min-h-screen bg-riseNavy text-white">
+
+
+    <!-- Orange top line -->
+    <div class="h-1 bg-riseOrange"></div>
+
+
+    <!-- Login container -->
+
+    <main class="flex min-h-screen items-center justify-center px-6 py-12">
+
+        <div class="w-full max-w-md">
+
+
+            <!-- Logo -->
+
+            <div class="mb-8 flex justify-center">
+
+                <div class="h-24 w-24 overflow-hidden rounded-full border-4 border-riseOrange bg-white shadow-xl">
+
+                    <img src="/images/logo.jpeg" alt="Rise & Recruit Logo" class="h-full w-full object-cover">
+
+                </div>
+
+            </div>
+
+
+            <!-- Heading -->
+
+            <div class="mb-8 text-center">
+
+                <h1 class="text-3xl font-extrabold">
+                    Head Login
+                </h1>
+
+                <p class="mt-2 text-sm text-white/50">
+                    Sign in to manage Rise-Score
+                </p>
+
+            </div>
+
+
+            <!-- Login Card -->
+
+            <div class="rounded-2xl border border-white/10 bg-riseCard p-8 shadow-2xl">
+
+
+                <form id="loginForm">
+
+
+                    <!-- Email -->
+
+                    <div class="mb-5">
+
+                        <label for="email" class="mb-2 block text-sm font-semibold text-white/80">
+
+                            Email
+
+                        </label>
+
+                        <input type="email" id="email" required placeholder="head@riseandrecruit.com"
+                            class="w-full rounded-xl border border-white/10 bg-riseNavy px-4 py-3 text-white outline-none transition placeholder:text-white/25 focus:border-riseOrange">
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="mb-6">
+
+                        <label for="password" class="mb-2 block text-sm font-semibold text-white/80">
+
+                            Password
+
+                        </label>
+
+                        <input type="password" id="password" required placeholder="Enter your password"
+                            class="w-full rounded-xl border border-white/10 bg-riseNavy px-4 py-3 text-white outline-none transition placeholder:text-white/25 focus:border-riseOrange">
+
+                    </div>
+
+
+                    <!-- Error -->
+
+                    <div id="errorMessage"
+                        class="mb-4 hidden rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    </div>
+
+
+                    <!-- Login button -->
+
+                    <button type="submit" id="loginButton"
+                        class="w-full rounded-xl bg-riseOrange px-4 py-3 font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+
+                        Sign In
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- Back -->
+
+                <a href="/score" class="mt-6 block text-center text-sm text-white/40 transition hover:text-riseOrange">
+
+                    ← Back to Leaderboard
+
+                </a>
+
+            </div>
+
+
+            <!-- Footer -->
+
+            <p class="mt-8 text-center text-xs text-white/30">
+
+                Rise & Recruit Club • Rise-Score
+
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- Firebase -->
+
+    <script type="module">
+
+        import { initializeApp }
+            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+        import {
+            getAuth,
+            signInWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        // Firebase config
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyALOrfbjPUfNQQ-wgPRCChxBZGjrQilL64",
+
+            authDomain: "rise-score.firebaseapp.com",
+
+            projectId: "rise-score",
+
+            storageBucket: "rise-score.firebasestorage.app",
+
+            messagingSenderId: "245312879304",
+
+            appId: "1:245312879304:web:1e5bfef268a121405bc3fd"
+
+        };
+
+
+        // Initialize Firebase
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+
+        // Login
+
+        const loginForm = document.getElementById("loginForm");
+
+        const loginButton = document.getElementById("loginButton");
+
+        const errorMessage = document.getElementById("errorMessage");
+
+
+        loginForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            errorMessage.classList.add("hidden");
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Signing in...";
+
+            try {
+                const userCredential =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+                const user = userCredential.user;
+
+                console.log(
+                    "Firebase login successful:",
+                    user.email
+                );
+
+
+                const idToken =
+                    await user.getIdToken(true);
+
+                console.log(
+                    "Token obtained:",
+                    idToken ? "YES" : "NO"
+                );
+
+
+                const response =
+                    await fetch("/head/dashboard", {
+
+                        method: "GET",
+
+                        headers: {
+                            "Authorization":
+                                "Bearer " + idToken
+                        }
+
+                    });
+
+                console.log(
+                    "Dashboard status:",
+                    response.status
+                );
+
+                const responseText =
+                    await response.text();
+
+                console.log(
+                    "Dashboard response:",
+                    responseText
+                );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `Dashboard access denied (${response.status})`
+                    );
+
+                }
+
+
+                document.open();
+                document.write(responseText);
+                document.close();
+
+            } catch (error) {
+
+                console.error(error);
+
+                errorMessage.textContent =
+                    "Login failed. Please check your credentials.";
+
+                errorMessage.classList.remove("hidden");
+
+                loginButton.disabled = false;
+
+                loginButton.textContent = "Sign In";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
