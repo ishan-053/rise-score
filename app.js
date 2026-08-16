@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-    res.send("Rise-Score API is running!");
+    res.render("/api/leaderboard");
 });
 
 app.get("/test-db", async (req, res) => {
