@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rise-Score | Rise & Recruit</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: "#020B24",
+                        navy2: "#06143A",
+                        blue: "#1264FF",
+                        blue2: "#0B3FBF",
+                        orange: "#FF8A00",
+                        orange2: "#FF5E00"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #020B24;
+            color: #F8FAFC;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+        }
+
+        .main-bg {
+            background:
+                radial-gradient(circle at 75% 18%,
+                    rgba(18, 100, 255, 0.14),
+                    transparent 30%),
+                radial-gradient(circle at 85% 35%,
+                    rgba(255, 138, 0, 0.07),
+                    transparent 25%),
+                #020B24;
+        }
+
+        .nav-bg {
+            background: rgba(2, 11, 36, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .blue-glow {
+            box-shadow:
+                0 0 30px rgba(18, 100, 255, 0.15),
+                inset 0 0 30px rgba(18, 100, 255, 0.03);
+        }
+
+        .orange-glow {
+            box-shadow:
+                0 0 30px rgba(255, 138, 0, 0.16);
+        }
+
+        .hero-title {
+            line-height: 0.98;
+            letter-spacing: -0.045em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg,
+                    #1264FF,
+                    #2D7BFF);
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .orange-text {
+            color: #FF8A00;
+        }
+
+        .blue-border {
+            border-color: rgba(18, 100, 255, 0.45);
+        }
+
+        .card-bg {
+            background: linear-gradient(145deg,
+                    rgba(7, 23, 59, 0.96),
+                    rgba(3, 14, 39, 0.98));
+        }
+
+        .card-bg:hover {
+            background: linear-gradient(145deg,
+                    rgba(8, 29, 75, 0.98),
+                    rgba(4, 17, 47, 1));
+        }
+
+        .podium {
+            background: linear-gradient(145deg,
+                    #09275D,
+                    #031333);
+
+            border: 1px solid rgba(18, 100, 255, 0.55);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 0 35px rgba(18, 100, 255, 0.08);
+        }
+
+        .podium-first {
+            background: linear-gradient(145deg,
+                    #0A347C,
+                    #04183D);
+        }
+
+        .feature-icon {
+            background: rgba(18, 100, 255, 0.10);
+            border: 1px solid rgba(18, 100, 255, 0.55);
+        }
+
+        .orange-icon {
+            background: rgba(255, 138, 0, 0.08);
+            border: 1px solid rgba(255, 138, 0, 0.55);
+        }
+
+        .section-line {
+            background: linear-gradient(90deg,
+                    #1264FF,
+                    #FF8A00);
+        }
+
+        .cta {
+            background:
+                radial-gradient(circle at 80% 50%,
+                    rgba(18, 100, 255, 0.20),
+                    transparent 40%),
+                linear-gradient(120deg,
+                    #06194A,
+                    #04102E);
+        }
+
+        .stat-card {
+            background: rgba(5, 20, 52, 0.75);
+        }
+
+        .floating {
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pulse-dot {
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(18, 100, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(18, 100, 255, 0);
+            }
+        }
+
+        .grid-lines {
+            background-image:
+                linear-gradient(rgba(18, 100, 255, 0.035) 1px,
+                    transparent 1px),
+                linear-gradient(90deg,
+                    rgba(18, 100, 255, 0.035) 1px,
+                    transparent 1px);
+
+            background-size: 55px 55px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+
+    <!-- NAVBAR -->
+
+
+    <header class="nav-bg fixed top-0 left-0 right-0 z-50
+           border-b border-blue-950/70">
+
+        <div class="mx-auto flex max-w-7xl items-center
+               justify-between px-6 py-4">
+
+            <!-- LOGO -->
+
+            <a href="/" class="flex items-center gap-3">
+
+                <img src="/images/logo.jpeg" alt="Rise-Score Logo" class="h-11 w-11 rounded-lg
+               object-contain">
+
+
+
+            </a>
+
+            <div>
+
+                <div class="text-xl font-extrabold
+                           tracking-tight">
+
+                    <span class="text-slate-100">
+                        Rise-
+                    </span>
+
+                    <span class="orange-text">
+                        Score
+                    </span>
+
+                </div>
+
+                <div class="text-[9px] font-medium
+                           tracking-[0.25em]
+                           text-blue-300">
+
+                    RISE & RECRUIT
+
+                </div>
+
+            </div>
+
+            </a>
+
+
+            <!-- NAV -->
+
+            <nav class="hidden items-center gap-10
+                   md:flex">
+
+                <a href="/" class="border-b-2 border-orange
+                       pb-2 font-semibold
+                       text-orange">
+
+                    Home
+
+                </a>
+
+                <a href="/score" class="pb-2 font-medium
+                       text-slate-300 transition
+                       hover:text-blue-400">
+
+                    Leaderboard
+
+                </a>
+
+                <!-- <a href="#about" class="pb-2 font-medium
+                       text-slate-300 transition
+                       hover:text-blue-400">
+
+                    About
+
+                </a> -->
+
+                <!--  <a href="#contact" class="pb-2 font-medium
+                       text-slate-300 transition
+                       hover:text-blue-400">
+
+                    Contact
+
+                </a>
+
+            </nav>      -->
+
+
+                <!-- LOGIN -->
+
+                <a href="/head/login" class="hidden rounded-xl
+                   border border-blue-500/60
+                   bg-blue-600/10 px-5 py-2.5
+                   font-semibold text-slate-100
+                   transition hover:border-orange
+                   hover:bg-orange/10
+                   md:block">
+
+                    &nbsp; Head Login
+
+                </a>
+
+        </div>
+
+    </header>
+
+
+
+
+    <!-- HERO -->
+
+
+    <main class="main-bg grid-lines
+           min-h-screen overflow-hidden pt-28">
+
+
+        <section class="mx-auto max-w-7xl
+               px-6 pb-20 pt-14">
+
+            <div class="grid items-center gap-12
+                   lg:grid-cols-2">
+
+
+                <!-- LEFT -->
+
+                <div>
+
+                    <p class="mb-5 text-sm font-bold
+                           tracking-[0.18em]
+                           text-blue-400">
+
+                        TRACK. COMPETE. RISE.
+
+                    </p>
+
+
+                    <h1 class="hero-title
+                           text-6xl font-black
+                           sm:text-7xl">
+
+                        Track.
+
+                        <br>
+
+                        <span class="gradient-text">
+                            Compete.
+                        </span>
+
+                        <br>
+
+                        <span class="orange-text">
+                            Rise
+                        </span>
+
+                        Together.
+
+                    </h1>
+
+
+                    <div class="section-line mt-7
+                           h-1 w-16 rounded-full">
+                    </div>
+
+
+                    <p class="mt-7 max-w-xl
+                           text-lg leading-8
+                           text-blue-100/70">
+
+                        Rise-Score is your central platform
+                        to track, compare and celebrate
+                        achievements.
+
+                        <br>
+
+                        Climb the leaderboard and
+                        make your mark.
+
+                    </p>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="mt-9 flex flex-wrap gap-4">
+
+
+                        <a href="/score" class="rounded-xl
+                               bg-blue-600
+                               px-7 py-3.5
+                               font-bold text-white
+                               shadow-xl
+                               shadow-blue-900/40
+                               transition
+                               hover:-translate-y-1
+                               hover:bg-blue-500">
+
+                            &nbsp; Go to Leaderboard
+                            <span class="ml-2">→</span>
+
+                        </a>
+
+
+                        <a href="/head/login" class="rounded-xl
+                               border border-orange
+                               bg-orange/5
+                               px-7 py-3.5
+                               font-bold text-orange
+                               transition
+                               hover:-translate-y-1
+                               hover:bg-orange/10">
+
+                            &nbsp; Head Login
+                            <span class="ml-2">→</span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT / PODIUM -->
+
+                <div class="relative flex min-h-[500px]
+                       items-center justify-center">
+
+
+                    <!-- Glow -->
+
+                    <div class="absolute h-80 w-80
+                           rounded-full
+                           bg-blue-600/10
+                           blur-3xl">
+                    </div>
+
+
+                    <!-- Rings -->
+
+                    <div class="absolute h-[430px] w-[430px]
+                           rounded-full border
+                           border-blue-500/20">
+                    </div>
+
+                    <div class="absolute h-[350px] w-[350px]
+                           rounded-full border
+                           border-orange/20">
+                    </div>
+
+
+                    <!-- Trophy -->
+
+                    <div class="floating relative z-10
+                           text-center">
+
+                        <div class="text-8xl
+                               drop-shadow-[0_0_30px_rgba(255,138,0,0.5)]">
+
+                            🏆
+
+                        </div>
+
+                        <div class="mt-1 text-6xl font-black
+                               text-orange
+                               drop-shadow-lg">
+
+                            ★
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PODIUM -->
+
+                    <div class="absolute bottom-5
+                           left-1/2 flex
+                           -translate-x-1/2
+                           items-end gap-3">
+
+
+                        <!-- 2 -->
+
+                        <div class="podium flex h-36 w-28
+                               items-center
+                               justify-center
+                               rounded-t-xl
+                               sm:w-36">
+
+                            <span class="text-6xl font-black
+                                   text-blue-500">
+
+                                2
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- 1 -->
+
+                        <div class="podium-first podium
+                               flex h-52 w-36
+                               items-center
+                               justify-center
+                               rounded-t-xl
+                               sm:w-44">
+
+                            <span class="text-8xl font-black
+                                   text-orange">
+
+                                1
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- 3 -->
+
+                        <div class="podium flex h-28 w-28
+                               items-center
+                               justify-center
+                               rounded-t-xl
+                               sm:w-36">
+
+                            <span class="text-6xl font-black
+                                   text-blue-500">
+
+                                3
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FLOATING STATS -->
+
+                    <div class="absolute left-0 top-20
+                           hidden rounded-xl
+                           border border-blue-500/40
+                           bg-navy2/90 p-4
+                           blue-glow sm:block">
+
+                        <div class="text-2xl font-black
+                               text-blue-400">
+
+                            ↗
+
+                        </div>
+
+                        <div class="text-xs text-blue-200/60">
+
+                            Performance
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="absolute right-0 top-28
+                           hidden rounded-xl
+                           border border-orange/40
+                           bg-navy2/90 p-4
+                           orange-glow sm:block">
+
+                        <div class="text-2xl text-orange">
+
+                            ★
+
+                        </div>
+
+                        <div class="text-xs text-orange-100/60">
+
+                            Achievement
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================== -->
+        <!-- FEATURES -->
+        <!-- ===================================================== -->
+
+        <section id="about" class="border-t border-blue-950/60
+           bg-[#03102D]">
+
+            <div class="mx-auto max-w-7xl
+               px-6 py-20">
+
+
+                <div class="text-center">
+
+                    <p class="text-sm font-bold
+                       tracking-[0.18em]
+                       text-orange">
+
+                        WHY RISE-SCORE?
+
+                    </p>
+
+                    <h2 class="mt-3 text-3xl font-bold
+                       sm:text-4xl">
+
+                        Built for Performance.
+                        <span class="text-blue-400">
+                            Designed for You.
+                        </span>
+
+                    </h2>
+
+                    <div class="section-line mx-auto
+                       mt-5 h-1 w-12
+                       rounded-full">
+                    </div>
+
+                </div>
+
+
+
+                <div class="mt-12 grid gap-5
+                   md:grid-cols-2
+                   lg:grid-cols-4">
+
+
+                    <!-- CARD 1 -->
+
+                    <div class="card-bg blue-glow
+                       group rounded-2xl
+                       border blue-border
+                       p-7 text-center
+                       transition duration-300
+                       hover:-translate-y-2">
+
+                        <div class="feature-icon mx-auto
+                           flex h-20 w-20
+                           items-center
+                           justify-center
+                           rounded-full
+                           text-4xl">
+
+                            🏆
+
+                        </div>
+
+                        <h3 class="mt-6 text-xl
+                           font-bold">
+
+                            Competitive
+                            Leaderboard
+
+                        </h3>
+
+                        <div class="mx-auto mt-4
+                           h-1 w-10
+                           bg-blue-500">
+                        </div>
+
+                        <p class="mt-5 text-sm
+                           leading-7
+                           text-blue-100/60">
+
+                            Real-time rankings
+                            that motivate members
+                            to perform better
+                            every day.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- CARD 2 -->
+
+                    <div class="card-bg
+                       group rounded-2xl
+                       border border-orange/40
+                       p-7 text-center
+                       transition duration-300
+                       hover:-translate-y-2
+                       orange-glow">
+
+                        <div class="orange-icon mx-auto
+                           flex h-20 w-20
+                           items-center
+                           justify-center
+                           rounded-full
+                           text-4xl">
+
+                            📊
+
+                        </div>
+
+                        <h3 class="mt-6 text-xl
+                           font-bold">
+
+                            Track &
+                            Analyze
+
+                        </h3>
+
+                        <div class="mx-auto mt-4
+                           h-1 w-10
+                           bg-orange">
+                        </div>
+
+                        <p class="mt-5 text-sm
+                           leading-7
+                           text-blue-100/60">
+
+                            Monitor progress,
+                            analyze performance
+                            and identify
+                            top achievers.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- CARD 3 -->
+
+                    <div class="card-bg
+                       group rounded-2xl
+                       border blue-border
+                       p-7 text-center
+                       transition duration-300
+                       hover:-translate-y-2">
+
+                        <div class="feature-icon mx-auto
+                           flex h-20 w-20
+                           items-center
+                           justify-center
+                           rounded-full
+                           text-4xl">
+
+                            👥
+
+                        </div>
+
+                        <h3 class="mt-6 text-xl
+                           font-bold">
+
+                            Department
+                            Pride
+
+                        </h3>
+
+                        <div class="mx-auto mt-4
+                           h-1 w-10
+                           bg-blue-500">
+                        </div>
+
+                        <p class="mt-5 text-sm
+                           leading-7
+                           text-blue-100/60">
+
+                            Celebrate your
+                            department's success
+                            and rise together
+                            as a team.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- CARD 4 -->
+
+                    <div class="card-bg
+                       group rounded-2xl
+                       border border-orange/40
+                       p-7 text-center
+                       transition duration-300
+                       hover:-translate-y-2">
+
+                        <div class="orange-icon mx-auto
+                           flex h-20 w-20
+                           items-center
+                           justify-center
+                           rounded-full
+                           text-4xl">
+
+                            🔐
+
+                        </div>
+
+                        <h3 class="mt-6 text-xl
+                           font-bold">
+
+                            Secure &
+                            Reliable
+
+                        </h3>
+
+                        <div class="mx-auto mt-4
+                           h-1 w-10
+                           bg-orange">
+                        </div>
+
+                        <p class="mt-5 text-sm
+                           leading-7
+                           text-blue-100/60">
+
+                            Role-based access
+                            ensures data security
+                            and a fair
+                            competition.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+
+
+        <section class="bg-[#020B24] px-6 py-16">
+
+            <div class="cta blue-glow
+               mx-auto max-w-7xl
+               rounded-2xl
+               border border-blue-500/40
+               px-8 py-10">
+
+                <div class="flex flex-col
+                   items-center justify-between
+                   gap-8 md:flex-row">
+
+
+                    <div>
+
+                        <p class="font-bold
+                           tracking-wider
+                           text-orange">
+
+                            READY TO RISE?
+
+                        </p>
+
+                        <h2 class="mt-3 text-3xl
+                           font-bold">
+
+                            Your journey to the
+                            <span class="text-blue-400">
+                                top
+                            </span>
+                            starts here.
+
+                        </h2>
+
+                        <p class="mt-3
+                           text-blue-100/60">
+
+                            Compete. Achieve. Inspire.
+
+                        </p>
+
+                    </div>
+
+
+                    <a href="/score" class="rounded-xl
+                       bg-orange
+                       px-7 py-4
+                       font-bold text-[#07142F]
+                       shadow-xl
+                       shadow-orange/20
+                       transition
+                       hover:-translate-y-1
+                       hover:bg-orange-400">
+
+                        &nbsp; Go to Leaderboard →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="border-blue-900/60
+                   p-7 text-center
+                   md:border-l">
+
+            <div class="text-4xl font-black
+                       text-orange">
+
+                100+
+
+            </div>
+
+            <p class="mt-2 text-sm
+                       text-blue-100/60">
+
+                Achievements
+
+            </p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+
+
+
+        <!-- QUOTE -->
+
+
+        <section class="bg-[#020B24] px-6 pb-20">
+
+            <div class="mx-auto max-w-3xl
+               text-center">
+
+                <div class="text-6xl font-black
+                   text-blue-600">
+
+                    “
+
+                </div>
+
+                <p class="text-2xl font-semibold
+                   text-slate-200">
+
+                    Success is earned.
+                    Rankings are proof.
+
+                </p>
+
+                <p class="mt-3 text-xl
+                   font-bold text-orange">
+
+                    Keep rising!
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+    </main>
+
+
+
+
+    <!-- FOOTER -->
+
+
+    <footer id="contact" class="border-t border-blue-950/70
+           bg-[#01081D]">
+
+        <div class="mx-auto flex max-w-7xl
+               flex-col items-center
+               justify-between gap-5
+               px-6 py-8
+               md:flex-row">
+
+
+            <a href="/" class="flex items-center gap-3">
+
+                <img src="/images/logo.jpeg" alt="Rise-Score Logo" class="h-11 w-11 rounded-lg
+               object-contain">
+
+                <span class="text-lg font-bold text-slate-100">
+                    Rise-<span class="text-orange">Score</span>
+                </span>
+
+            </a>
+
+
+            <p class="text-sm
+                   text-blue-100/40">
+
+                © 2026 Rise-Score.
+                All rights reserved.
+
+            </p>
+
+
+            <div class="flex gap-3">
+
+                <a href="https://www.linkedin.com/company/riseandrecruit/ " class="flex h-10 w-10
+                       items-center
+                       justify-center
+                       rounded-full
+                       border border-blue-500/40
+                       text-sm font-bold
+                       text-blue-400
+                       transition
+                       hover:bg-blue-600
+                       hover:text-white">
+
+                    in
+
+                </a>
+
+                <a href="#" class="flex h-10 w-10
+                       items-center
+                       justify-center
+                       rounded-full
+                       border border-orange/40
+                       text-sm font-bold
+                       text-orange
+                       transition
+                       hover:bg-orange
+                       hover:text-[#020B24]">
+
+                    ◎
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -17,8 +17,10 @@ app.set("view engine", "ejs");
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-    res.render("/api/leaderboard");
+    res.render("home");
 });
+
+
 
 app.get("/test-db", async (req, res) => {
     try {
