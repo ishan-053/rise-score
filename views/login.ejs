@@ -124,6 +124,22 @@
 
                     </button>
 
+                    <div class="my-5 flex items-center gap-3">
+                        <div class="h-px flex-1 bg-white/10"></div>
+                        <span class="text-xs text-white/40">OR</span>
+                        <div class="h-px flex-1 bg-white/10"></div>
+                    </div>
+
+                    <button id="googleButton" type="button" class="flex w-full items-center justify-center gap-3
+                    rounded-xl border border-blue-500/30
+                    bg-[#081B3A] px-5 py-3.5
+                    font-semibold text-white
+                    hover:bg-[#0D2750]">
+
+                        Continue with Google
+
+                    </button>
+
 
                 </form>
 
@@ -153,148 +169,107 @@
 
 
     <!-- Firebase -->
-
     <script type="module">
-
         import { initializeApp }
-            from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+            from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
         import {
             getAuth,
-            signInWithEmailAndPassword
-        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
         // Firebase config
-
         const firebaseConfig = {
-
             apiKey: "AIzaSyALOrfbjPUfNQQ-wgPRCChxBZGjrQilL64",
-
             authDomain: "rise-score.firebaseapp.com",
-
             projectId: "rise-score",
-
             storageBucket: "rise-score.firebasestorage.app",
-
             messagingSenderId: "245312879304",
-
             appId: "1:245312879304:web:1e5bfef268a121405bc3fd"
-
         };
 
-
         // Initialize Firebase
-
         const app = initializeApp(firebaseConfig);
-
         const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
 
-
-        // Login
-
+        // DOM elements
         const loginForm = document.getElementById("loginForm");
-
         const loginButton = document.getElementById("loginButton");
-
+        const googleButton = document.getElementById("googleButton");
         const errorMessage = document.getElementById("errorMessage");
 
+        // Helper function to send token to dashboard backend
+        async function handleAuthSuccess(user) {
+            console.log("Firebase login successful:", user.email);
 
+            const idToken = await user.getIdToken(true);
+
+            const response = await fetch("/head/dashboard", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + idToken
+                }
+            });
+
+            const responseText = await response.text();
+
+            if (!response.ok) {
+                let errorMsg = `Dashboard access denied (${response.status})`;
+                try {
+                    const jsonErr = JSON.parse(responseText);
+                    if (jsonErr.error) errorMsg = jsonErr.error;
+                } catch (e) { }
+                throw new Error(errorMsg);
+            }
+
+            document.open();
+            document.write(responseText);
+            document.close();
+        }
+
+        // Email / Password Login
         loginForm.addEventListener("submit", async (event) => {
-
             event.preventDefault();
 
-            const email =
-                document.getElementById("email").value.trim();
-
-            const password =
-                document.getElementById("password").value;
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
 
             errorMessage.classList.add("hidden");
-
             loginButton.disabled = true;
             loginButton.textContent = "Signing in...";
 
             try {
-                const userCredential =
-                    await signInWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
-                    );
-
-                const user = userCredential.user;
-
-                console.log(
-                    "Firebase login successful:",
-                    user.email
-                );
-
-
-                const idToken =
-                    await user.getIdToken(true);
-
-                console.log(
-                    "Token obtained:",
-                    idToken ? "YES" : "NO"
-                );
-
-
-                const response =
-                    await fetch("/head/dashboard", {
-
-                        method: "GET",
-
-                        headers: {
-                            "Authorization":
-                                "Bearer " + idToken
-                        }
-
-                    });
-
-                console.log(
-                    "Dashboard status:",
-                    response.status
-                );
-
-                const responseText =
-                    await response.text();
-
-                console.log(
-                    "Dashboard response:",
-                    responseText
-                );
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `Dashboard access denied (${response.status})`
-                    );
-
-                }
-
-
-                document.open();
-                document.write(responseText);
-                document.close();
-
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                await handleAuthSuccess(userCredential.user);
             } catch (error) {
-
-                console.error(error);
-
-                errorMessage.textContent =
-                    "Login failed. Please check your credentials.";
-
+                console.error("Email login error:", error);
+                errorMessage.textContent = error.message || "Login failed. Please check your credentials.";
                 errorMessage.classList.remove("hidden");
-
+            } finally {
                 loginButton.disabled = false;
-
                 loginButton.textContent = "Sign In";
-
             }
-
         });
 
+        // Google Sign-In
+        googleButton.addEventListener("click", async () => {
+            errorMessage.classList.add("hidden");
+            googleButton.disabled = true;
+
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                await handleAuthSuccess(result.user);
+            } catch (error) {
+                console.error("Google login error:", error);
+                errorMessage.textContent = error.message || "Google login failed.";
+                errorMessage.classList.remove("hidden");
+            } finally {
+                googleButton.disabled = false;
+            }
+        });
     </script>
 
 </body>

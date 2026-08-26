@@ -137,324 +137,544 @@
 
         <!--STAT CARDS-->
 
-        <section class="mb-8 grid gap-5 md:grid-cols-3">
-
-
-            <!-- Total Members -->
-
-            <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
-
-                <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17 20h5v-2a4 4 0 00-4-4h-1m-6 6H5v-2a4 4 0 014-4h3m0-5a4 4 0 110-8 4 4 0 010 8zm6 0a3 3 0 110-6 3 3 0 010 6z" />
-
-                    </svg>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-sm font-medium text-white/60">
-                        Total Members
-                    </p>
-
-                    <p class="mt-1 text-4xl font-extrabold text-riseOrange">
-                        <%= members.length %>
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Highest Score -->
-
-            <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
-
-                <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.176 0l-2.802 2.036c-.783.57-1.838-.197-1.539-1.118l1.071-3.292a1 1 0 00-.364-1.118L5.773 8.719c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.951-.69l1.275-3.292z" />
-
-                    </svg>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-sm font-medium text-white/60">
-                        Highest Score
-                    </p>
-
-                    <p class="mt-1 text-4xl font-extrabold text-riseOrange">
-                        <%= members.length> 0 ? members[0].total_points : 0 %>
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Total Points -->
-
-            <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
-
-                <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 3c2.21 0 4 1.79 4 4 0 1.1-.45 2.1-1.17 2.83M12 3C9.79 3 8 4.79 8 7c0 1.1.45 2.1 1.17 2.83M12 3v18m-4-4c0 2.21 1.79 4 4 4s4-1.79 4-4c0-1.1-.45-2.1-1.17-2.83M8 17c0-1.1.45-2.1 1.17-2.83M16 17c0-1.1-.45-2.1-1.17-2.83" />
-
-                    </svg>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-sm font-medium text-white/60">
-                        Total Points
-                    </p>
-
-                    <p class="mt-1 text-4xl font-extrabold text-riseOrange">
-
-                        <%= members.reduce( (total, member)=>
-                            total + Number(member.total_points), 0
-                            ) %>
-
-                    </p>
-
-                </div>
-
-            </div>
-
         </section>
 
 
+        <!-- ========================================= -->
+        <!-- TOP PERFORMERS -->
+        <!-- ========================================= -->
 
-        <!--LEADERBOARD-->
+        <% if (members.length> 0) { %>
 
-        <section class="overflow-hidden rounded-2xl border border-white/10 bg-riseCard shadow-2xl">
+            <section class="mb-12">
 
+                <div class="mb-6 text-center">
 
-            <!-- Section Header -->
+                    <p class="text-sm font-bold tracking-[0.2em] text-riseOrange">
+                        TOP PERFORMERS
+                    </p>
 
-            <div class="flex items-center justify-between border-b border-white/10 px-6 py-6">
+                    <h3 class="mt-2 text-3xl font-extrabold">
+                        Leading the Rise
+                    </h3>
 
-                <div class="flex items-center gap-3">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-riseOrange" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 16l4-5 3 3 5-7" />
-
-                    </svg>
-
-
-                    <div>
-
-                        <h3 class="text-xl font-bold">
-                            Current Rankings
-                        </h3>
-
-                        <p class="text-sm text-white/50">
-                            Rise & Recruit member standings
-                        </p>
-
-                    </div>
+                    <p class="mt-2 text-white/50">
+                        The highest scoring members of Rise & Recruit
+                    </p>
 
                 </div>
 
 
-                <span
-                    class="hidden rounded-lg bg-riseOrange/10 px-3 py-2 text-xs font-bold tracking-wider text-riseOrange sm:block">
+                <!-- PODIUM -->
 
-                    LIVE RANKINGS
+                <div class="grid items-end gap-5 md:grid-cols-3">
 
-                </span>
 
-            </div>
+                    <!-- SECOND PLACE -->
 
+                    <% if (members[1]) { %>
 
+                        <div class="order-2 rounded-2xl border border-white/10
+                           bg-riseCard p-6 text-center
+                           shadow-xl transition duration-300
+                           hover:-translate-y-2 md:order-1">
 
-            <!-- Table -->
+                            <div class="mx-auto mb-4 flex h-16 w-16
+                               items-center justify-center
+                               rounded-full
+                               bg-gradient-to-br from-gray-300 to-gray-600
+                               text-2xl font-black text-white">
 
-            <div class="overflow-x-auto">
+                                2
 
-                <table class="w-full">
+                            </div>
 
+                            <p class="text-sm font-semibold text-white/40">
+                                2ND PLACE
+                            </p>
 
-                    <!-- Table Head -->
+                            <h4 class="mt-2 truncate text-xl
+                               font-extrabold text-white">
 
-                    <thead class="bg-riseNavy">
+                                <%= members[1].name %>
 
-                        <tr class="text-left text-sm text-white/50">
+                            </h4>
 
-                            <th class="px-6 py-5">
-                                Rank
-                            </th>
+                            <span class="mt-3 inline-block rounded-lg
+                               bg-blue-500/15 px-3 py-1
+                               text-sm font-semibold
+                               text-blue-300">
 
-                            <th class="px-6 py-5">
-                                Member
-                            </th>
+                                <%= members[1].department %>
 
-                            <th class="px-6 py-5">
-                                Department
-                            </th>
+                            </span>
 
-                            <th class="px-6 py-5 text-right">
-                                Points
-                            </th>
+                            <p class="mt-4 text-3xl font-black text-riseOrange">
 
-                        </tr>
+                                <%= members[1].total_points %>
 
-                    </thead>
-
-
-
-                    <!-- Table Body -->
-
-                    <tbody class="divide-y divide-white/10">
-
-
-                        <% members.forEach((member)=> { %>
-
-
-                            <tr class="group transition duration-200 hover:bg-riseOrange/5">
-
-
-                                <!-- Rank -->
-
-                                <td class="px-6 py-5">
-
-                                    <% if (member.rank==1) { %>
-
-                                        <div
-                                            class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-yellow-300 to-yellow-600 text-lg font-black text-white shadow-lg">
-
-                                            1
-
-                                        </div>
-
-                                        <% } else if (member.rank==2) { %>
-
-                                            <div
-                                                class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-gray-200 to-gray-500 text-lg font-black text-gray-700">
-
-                                                2
-
-                                            </div>
-
-                                            <% } else if (member.rank==3) { %>
-
-                                                <div
-                                                    class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-300 to-orange-600 text-lg font-black text-white">
-
-                                                    3
-
-                                                </div>
-
-                                                <% } else { %>
-
-                                                    <span class="ml-3 font-bold text-white/50">
-
-                                                        <%= member.rank %>
-
-                                                    </span>
-
-                                                    <% } %>
-
-                                </td>
-
-
-
-                                <!-- Member -->
-
-                                <td class="px-6 py-5">
-
-                                    <div class="flex items-center gap-4">
-
-
-                                        <!-- Member avatar -->
-
-                                        <div
-                                            class="flex h-11 w-11 items-center justify-center rounded-full bg-riseOrange text-lg font-bold text-white">
-
-                                            <%= member.name.charAt(0).toUpperCase() %>
-
-                                        </div>
-
-
-                                        <span class="font-semibold text-white">
-
-                                            <%= member.name %>
-
-                                        </span>
-
-                                    </div>
-
-                                </td>
-
-
-
-                                <!-- Department -->
-
-                                <td class="px-6 py-5">
-
-                                    <span
-                                        class="rounded-lg bg-blue-500/15 px-3 py-2 text-sm font-semibold text-blue-300">
-
-                                        <%= member.department %>
-
-                                    </span>
-
-                                </td>
-
-
-
-                                <!-- Points -->
-
-                                <td class="px-6 py-5 text-right">
-
-                                    <span class="text-2xl font-extrabold text-riseOrange">
-
-                                        <%= member.total_points %>
-
-                                    </span>
-
-                                    <span class="ml-1 text-sm text-white/40">
+                                    <span class="text-sm font-medium text-white/40">
                                         pts
                                     </span>
 
-                                </td>
+                            </p>
+
+                        </div>
+
+                        <% } %>
 
 
-                            </tr>
+
+                            <!-- FIRST PLACE -->
+
+                            <div class="order-1 rounded-2xl
+                           border-2 border-riseOrange/50
+                           bg-gradient-to-b
+                           from-riseCard to-riseNavy
+                           p-7 text-center
+                           shadow-2xl shadow-riseOrange/10
+                           transition duration-300
+                           hover:-translate-y-2 md:order-2">
+
+                                <div class="mx-auto mb-4 flex h-20 w-20
+                               items-center justify-center
+                               rounded-full
+                               bg-gradient-to-br
+                               from-yellow-300
+                               via-riseOrange
+                               to-orange-700
+                               text-3xl font-black
+                               text-white shadow-lg">
+
+                                    🏆
+
+                                </div>
+
+                                <p class="text-sm font-bold
+                               tracking-wider text-riseOrange">
+
+                                    1ST PLACE
+
+                                </p>
+
+                                <h4 class="mt-2 truncate text-2xl
+                               font-extrabold text-white">
+
+                                    <%= members[0].name %>
+
+                                </h4>
+
+                                <span class="mt-3 inline-block rounded-lg
+                               bg-riseOrange/10 px-3 py-1
+                               text-sm font-semibold
+                               text-riseOrange">
+
+                                    <%= members[0].department %>
+
+                                </span>
+
+                                <p class="mt-4 text-4xl font-black
+                               text-riseOrange">
+
+                                    <%= members[0].total_points %>
+
+                                        <span class="text-sm font-medium
+                                   text-white/40">
+
+                                            pts
+
+                                        </span>
+
+                                </p>
+
+                            </div>
 
 
-                            <% }) %>
+
+                            <!-- THIRD PLACE -->
+
+                            <% if (members[2]) { %>
+
+                                <div class="order-3 rounded-2xl
+                           border border-white/10
+                           bg-riseCard p-6 text-center
+                           shadow-xl transition duration-300
+                           hover:-translate-y-2">
+
+                                    <div class="mx-auto mb-4 flex h-16 w-16
+                               items-center justify-center
+                               rounded-full
+                               bg-gradient-to-br
+                               from-orange-300 to-orange-700
+                               text-2xl font-black text-white">
+
+                                        3
+
+                                    </div>
+
+                                    <p class="text-sm font-semibold text-white/40">
+                                        3RD PLACE
+                                    </p>
+
+                                    <h4 class="mt-2 truncate text-xl
+                               font-extrabold text-white">
+
+                                        <%= members[2].name %>
+
+                                    </h4>
+
+                                    <span class="mt-3 inline-block rounded-lg
+                               bg-blue-500/15 px-3 py-1
+                               text-sm font-semibold
+                               text-blue-300">
+
+                                        <%= members[2].department %>
+
+                                    </span>
+
+                                    <p class="mt-4 text-3xl font-black text-riseOrange">
+
+                                        <%= members[2].total_points %>
+
+                                            <span class="text-sm font-medium text-white/40">
+                                                pts
+                                            </span>
+
+                                    </p>
+
+                                </div>
+
+                                <% } %>
+
+                </div>
+
+            </section>
+
+            <% } %>
 
 
-                    </tbody>
 
-                </table>
+                <!-- STAT CARDS -->
 
-            </div>
 
-        </section>
+                <section class="mb-8 grid gap-5 md:grid-cols-3">
+
+
+                    <!-- Total Members -->
+
+                    <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
+
+                        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17 20h5v-2a4 4 0 00-4-4h-1m-6 6H5v-2a4 4 0 014-4h3m0-5a4 4 0 110-8 4 4 0 010 8zm6 0a3 3 0 110-6 3 3 0 010 6z" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm font-medium text-white/60">
+                                Total Members
+                            </p>
+
+                            <p class="mt-1 text-4xl font-extrabold text-riseOrange">
+                                <%= members.length %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Highest Score -->
+
+                    <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
+
+                        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.176 0l-2.802 2.036c-.783.57-1.838-.197-1.539-1.118l1.071-3.292a1 1 0 00-.364-1.118L5.773 8.719c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.951-.69l1.275-3.292z" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm font-medium text-white/60">
+                                Highest Score
+                            </p>
+
+                            <p class="mt-1 text-4xl font-extrabold text-riseOrange">
+                                <%= members.length> 0 ? members[0].total_points : 0 %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Total Points -->
+
+                    <div class="flex items-center gap-5 rounded-2xl border border-white/10 bg-riseCard p-6 shadow-xl">
+
+                        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-riseOrange">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 3c2.21 0 4 1.79 4 4 0 1.1-.45 2.1-1.17 2.83M12 3C9.79 3 8 4.79 8 7c0 1.1.45 2.1 1.17 2.83M12 3v18m-4-4c0 2.21 1.79 4 4 4s4-1.79 4-4c0-1.1-.45-2.1-1.17-2.83M8 17c0-1.1.45-2.1 1.17-2.83M16 17c0-1.1-.45-2.1-1.17-2.83" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm font-medium text-white/60">
+                                Total Points
+                            </p>
+
+                            <p class="mt-1 text-4xl font-extrabold text-riseOrange">
+
+                                <%= members.reduce( (total, member)=>
+                                    total + Number(member.total_points), 0
+                                    ) %>
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!--LEADERBOARD-->
+
+                <section class="overflow-hidden rounded-2xl border border-white/10 bg-riseCard shadow-2xl">
+
+
+                    <!-- Section Header -->
+
+                    <div class="flex items-center justify-between border-b border-white/10 px-6 py-6">
+
+                        <div class="flex items-center gap-3">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-riseOrange" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 16l4-5 3 3 5-7" />
+
+                            </svg>
+
+
+                            <div>
+
+                                <h3 class="text-xl font-bold">
+                                    Current Rankings
+                                </h3>
+
+                                <p class="text-sm text-white/50">
+                                    Rise & Recruit member standings
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="hidden rounded-lg bg-riseOrange/10 px-3 py-2 text-xs font-bold tracking-wider text-riseOrange sm:block">
+
+                            LIVE RANKINGS
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Table -->
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full">
+
+
+                            <!-- Table Head -->
+
+                            <thead class="bg-riseNavy">
+
+                                <tr class="text-left text-sm text-white/50">
+
+                                    <th class="px-6 py-5">
+                                        Rank
+                                    </th>
+
+                                    <th class="px-6 py-5">
+                                        Member
+                                    </th>
+
+                                    <th class="px-6 py-5">
+                                        Department
+                                    </th>
+
+                                    <th class="px-6 py-5 text-right">
+                                        Points
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+
+                            <!-- Table Body -->
+
+                            <tbody class="divide-y divide-white/10">
+
+
+                                <% members.forEach((member)=> { %>
+
+
+                                    <tr class="group transition duration-200 hover:bg-riseOrange/5">
+
+
+                                        <!-- Rank -->
+
+                                        <td class="px-6 py-5">
+
+                                            <% if (member.rank==1) { %>
+
+                                                <div
+                                                    class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-yellow-300 to-yellow-600 text-lg font-black text-white shadow-lg">
+
+                                                    1
+
+                                                </div>
+
+                                                <% } else if (member.rank==2) { %>
+
+                                                    <div
+                                                        class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-gray-200 to-gray-500 text-lg font-black text-gray-700">
+
+                                                        2
+
+                                                    </div>
+
+                                                    <% } else if (member.rank==3) { %>
+
+                                                        <div
+                                                            class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-300 to-orange-600 text-lg font-black text-white">
+
+                                                            3
+
+                                                        </div>
+
+                                                        <% } else { %>
+
+                                                            <span class="ml-3 font-bold text-white/50">
+
+                                                                <%= member.rank %>
+
+                                                            </span>
+
+                                                            <% } %>
+
+                                        </td>
+
+
+
+                                        <!-- Member -->
+
+                                        <td class="px-6 py-5">
+
+                                            <div class="flex items-center gap-4">
+
+
+                                                <!-- Member avatar -->
+
+                                                <div
+                                                    class="flex h-11 w-11 items-center justify-center rounded-full bg-riseOrange text-lg font-bold text-white">
+
+                                                    <%= member.name.charAt(0).toUpperCase() %>
+
+                                                </div>
+
+
+                                                <span class="font-semibold text-white">
+
+                                                    <%= member.name %>
+
+                                                </span>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                        <!-- Department -->
+
+                                        <td class="px-6 py-5">
+
+                                            <span
+                                                class="rounded-lg bg-blue-500/15 px-3 py-2 text-sm font-semibold text-blue-300">
+
+                                                <%= member.department %>
+
+                                            </span>
+
+                                        </td>
+
+
+
+                                        <!-- Points -->
+
+                                        <td class="px-6 py-5 text-right">
+
+                                            <span class="text-2xl font-extrabold text-riseOrange">
+
+                                                <%= member.total_points %>
+
+                                            </span>
+
+                                            <span class="ml-1 text-sm text-white/40">
+                                                pts
+                                            </span>
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                    <% }) %>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
 
     </main>
 
